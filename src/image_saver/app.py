@@ -18,19 +18,22 @@ async def allowed_file(file_name: str) -> Tuple[bool, str]:
             return True, ext
     return False, ''
 
+
+async def save_file(file: UploadFile, file_path: Path):
+    with open(file_path, "wb") as f:
+        f.write(file.file.read())
+
 @app.post("/images")
 async def save_image_to_server(file: UploadFile = File(...)):
     is_valid, ext = await allowed_file(file.filename)
     if not is_valid:
         raise HTTPException(
             status_code=415,
-            detail="File extension not allowed,"
-                   " only jpeg, jpg, png files are allowed"
+            detail="Only jpeg, jpg, png files are allowed!"
         )
     random_id = str(uuid.uuid4())
     file_path = Path.cwd().joinpath(f"images/{random_id}.{ext}")
-    with open(file_path, "wb") as f:
-        f.write(file.file.read())
+    await save_file(file, file_path)
     try:
         Image.open(file_path)
     except:

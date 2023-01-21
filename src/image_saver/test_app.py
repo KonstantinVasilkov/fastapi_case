@@ -45,5 +45,4 @@ def test_create_image_invalid_ext():
     assert response.status_code == 415
     json_response = response.json()
     assert "detail" in json_response
-    assert json_response["detail"] == ("File extension not allowed, only "
-                                       "jpeg, jpg, png files are allowed")
+    assert json_response["detail"] == "Only jpeg, jpg, png files are allowed!"
