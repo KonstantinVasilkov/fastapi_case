@@ -46,6 +46,9 @@ async def main(folder_path: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("folder_path", help="Path to the folder containing the images")
+    parser.add_argument(
+        "folder_path",
+        help="Path to the folder containing the images"
+    )
     args = parser.parse_args()
     asyncio.run(main(args.folder_path))
