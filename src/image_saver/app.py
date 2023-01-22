@@ -1,3 +1,4 @@
+import logging
 import os
 import uuid
 from pathlib import Path
@@ -23,6 +24,7 @@ async def save_file(file: UploadFile, file_path: Path):
     with open(file_path, "wb") as f:
         f.write(file.file.read())
 
+
 @app.post("/images")
 async def save_image_to_server(file: UploadFile = File(...)):
     is_valid, ext = await allowed_file(file.filename)
@@ -35,8 +37,10 @@ async def save_image_to_server(file: UploadFile = File(...)):
     file_path = Path.cwd().joinpath(f"images/{random_id}.{ext}")
     await save_file(file, file_path)
     try:
-        Image.open(file_path)
-    except:
+        img = Image.open(file_path)
+        img.verify()
+    except (IOError, SyntaxError) as e:
+        logging.error(e)
         os.remove(file_path)
         return {"detail": "Invalid image file"}
     return {"id": random_id}

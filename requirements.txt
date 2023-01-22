@@ -7,3 +7,4 @@ python-multipart
 pytest
 httpx
 aiohttp
+flake8
