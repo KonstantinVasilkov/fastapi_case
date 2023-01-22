@@ -40,6 +40,7 @@ To deploy the application to a remote server, you will need to build the Docker 
 To test the functionality of the API once your Docker container running you 
 may to execute the script called ***sender_script.py*** from the root of 
 the project using command:
+
 `$ python3 sender_script.py <path/to/the/folder/with/images>`
 
 ## Built With
