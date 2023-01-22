@@ -43,6 +43,17 @@ the project using command:
 
 `$ python3 sender_script.py <path/to/the/folder/with/images>`
 
+After the script finishes it work you will find a file called `results.csv` 
+in the root folder where you find information which files was successfully 
+sent to the server in format:
+
+
+| path_to_file | id_from_server |
+|--------------|----------------|
+| some/path    | some_id        |
+
+
+
 ## Built With
 - [FastAPI](https://fastapi.tiangolo.com/) - The web framework used
 - [Docker](https://www.docker.com/) - Containerization
