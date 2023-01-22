@@ -17,15 +17,16 @@ You will need to have Docker installed on your machine.
 ### Installing
 1. Clone the repository to your local machine
 
-`
-$ git clone git@github.com:KonstantinVasilkov/monite_test_case.git
-`
+`$ git clone git@github.com:KonstantinVasilkov/monite_test_case.git`
+
 2. Change directory to the cloned repository
 
 `$ cd image-saver`
+
 3. Build the Docker image
 
 `$ docker build -t image-saver .`
+
 4. Run the Docker container
 
 `$ docker run -p 8000:8000 image-saver`
