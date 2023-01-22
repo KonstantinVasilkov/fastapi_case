@@ -21,7 +21,7 @@ You will need to have Docker installed on your machine.
 
 2. Change directory to the cloned repository
 
-`$ cd image-saver`
+`$ cd monite_test_case`
 
 3. Build the Docker image
 
