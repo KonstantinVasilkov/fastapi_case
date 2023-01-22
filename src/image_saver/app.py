@@ -21,6 +21,9 @@ async def allowed_file(file_name: str) -> Tuple[bool, str]:
 
 
 async def save_file(file: UploadFile, file_path: Path):
+    images_folder = Path("images")
+    if not images_folder.exists():
+        images_folder.mkdir()
     with open(file_path, "wb") as f:
         f.write(file.file.read())
 

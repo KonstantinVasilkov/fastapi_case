@@ -3,7 +3,6 @@ import asyncio
 import csv
 import uuid
 from pathlib import Path
-from typing import Any
 
 import aiohttp
 
@@ -11,7 +10,7 @@ import aiohttp
 async def post_image_to_api(
         session: aiohttp.ClientSession,
         file_path: Path
-) -> tuple[Path, Any]:
+) -> tuple[Path, str]:
     boundary = uuid.uuid4().hex
     headers = {
         "Content-Type": f"multipart/form-data; boundary={boundary}",

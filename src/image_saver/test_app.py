@@ -1,10 +1,9 @@
-import pathlib
 import uuid
 from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from src.image_saver.app import app
+from image_saver.app import app
 
 client = TestClient(app)
 
@@ -15,7 +14,7 @@ def test_create_image():
         "Content-Type": f"multipart/form-data; boundary={boundary}",
     }
     file_name = 'test_image.jpg'
-    path_to_image = Path.cwd().joinpath(f'tests/{file_name}')
+    path_to_image = f'tests/{file_name}'
     with open(path_to_image, "rb") as image_file:
         response = client.post(
             "/images",
@@ -26,7 +25,7 @@ def test_create_image():
     assert "id" in response.json()
     assert response.json()["id"] is not None
     file_path = f"images/{response.json()['id']}.jpg"
-    assert pathlib.Path(file_path).exists()
+    assert Path(file_path).exists()
 
 
 def test_create_image_invalid_ext():
@@ -35,7 +34,7 @@ def test_create_image_invalid_ext():
         "Content-Type": f"multipart/form-data; boundary={boundary}",
     }
     file_name = 'test_image.txt'
-    path_to_image = Path.cwd().joinpath(f'tests/{file_name}')
+    path_to_image = f'tests/{file_name}'
     with open(path_to_image, "rb") as image_file:
         response = client.post(
             "/images",
