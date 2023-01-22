@@ -1,27 +1,24 @@
 import argparse
 import asyncio
 import csv
-import uuid
 from pathlib import Path
 
 import aiohttp
+
+semaphore = asyncio.Semaphore(100)
 
 
 async def post_image_to_api(
         session: aiohttp.ClientSession,
         file_path: Path
 ) -> tuple[Path, str]:
-    boundary = uuid.uuid4().hex
-    headers = {
-        "Content-Type": f"multipart/form-data; boundary={boundary}",
-    }
-
-    with open(file_path, "rb") as image_file:
-        data = aiohttp.FormData()
-        data.add_field("file", image_file, filename=file_path.name)
-        async with session.post("http://localhost:8000/images", data=data) as resp:
-            json_response = await resp.json()
-            return file_path, json_response["id"]
+    async with semaphore:
+        with open(file_path, "rb") as image_file:
+            data = aiohttp.FormData()
+            data.add_field("file", image_file, filename=file_path.name)
+            async with session.post("http://localhost:8000/images", data=data) as resp:
+                json_response = await resp.json()
+                return file_path, json_response["id"]
 
 
 async def main(folder_path: str):
